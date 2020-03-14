@@ -1,26 +1,24 @@
+import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
+import AppRouterOutlet from './AppRouterOutlet';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <Router>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" className="title">
+              Food
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Container>
+          <AppRouterOutlet />
+        </Container>
+      </Router>
+    </main>
   );
 }
-
-export default App;
