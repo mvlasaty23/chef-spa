@@ -7,6 +7,8 @@ import {
   Breadcrumbs,
   Link,
   makeStyles,
+  useTheme,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
@@ -59,6 +61,9 @@ const useStyles = makeStyles(theme => ({
   breadcrumbs: {
     marginTop: theme.spacing(1),
   },
+  titleOverlay: {
+    color: 'white',
+  },
 }));
 
 export default function RecipeListComponent() {
@@ -72,6 +77,9 @@ export default function RecipeListComponent() {
       }
     };
   });
+  const theme = useTheme();
+  const onSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const cols = onSmallScreen === true ? 2 : 4;
   return (
     <div>
       <Grid container spacing={1}>
@@ -80,14 +88,16 @@ export default function RecipeListComponent() {
             <Link color="inherit" component={RouterLink} to="/">
               Home
             </Link>
-            <Link color="inherit" component={RouterLink} to="/recipes">
+            <Link color="textPrimary" component={RouterLink} to="/recipes" aria-current="page">
               Recipes
             </Link>
           </Breadcrumbs>
         </Grid>
       </Grid>
-      <RecipeListSearchBarComponent />
-      <GridList cellHeight={180} cols={3}>
+      <Grid item xs={12}>
+        <RecipeListSearchBarComponent />
+      </Grid>
+      <GridList cellHeight={180} cols={cols}>
         {recipes.map(tile => (
           <GridListTile key={tile.title}>
             <img src={tile.img} alt={tile.title} />
@@ -96,7 +106,7 @@ export default function RecipeListComponent() {
               subtitle={<span>by: {tile.author}</span>}
               actionIcon={
                 <IconButton component={RouterLink} to={'/recipes' + tile.slug} aria-label={`info about ${tile.title}`}>
-                  <Info style={{ color: 'white' }} />
+                  <Info className={classes.titleOverlay} />
                 </IconButton>
               }
             />
