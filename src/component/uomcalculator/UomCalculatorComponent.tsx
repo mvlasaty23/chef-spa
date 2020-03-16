@@ -52,11 +52,50 @@ const uoms: UnitOfMeasure[] = [
     system: 'metric',
     category: 'Gewicht',
   },
+  {
+    id: 'l',
+    short: 'l',
+    long: 'Liter',
+    baseUom: 'l',
+    baseFactor: 1,
+    system: 'metric',
+    category: 'Volumen',
+  },
+  {
+    id: 'ml',
+    short: 'ml',
+    long: 'Milliliter',
+    baseUom: 'l',
+    baseFactor: 0.0001,
+    system: 'metric',
+    category: 'Volumen',
+  },
+  {
+    id: 'cl',
+    short: 'cl',
+    long: 'Centiliter',
+    baseUom: 'l',
+    baseFactor: 0.001,
+    system: 'metric',
+    category: 'Volumen',
+  },
 ];
 function findUom(id: string) {
   return uoms.find(uom => uom.id === id) || uoms[1];
 }
-
+function findUomByCategory(uom: UnitOfMeasure): UnitOfMeasure {
+  return (
+    uoms.find(el => el.id !== uom.id && el.category === uom.category) || {
+      id: 'none',
+      short: 'none',
+      long: 'None',
+      baseUom: 'none',
+      baseFactor: 1,
+      system: 'metric',
+      category: uom.category,
+    }
+  );
+}
 interface Amount {
   uom: string;
   amount: number;
@@ -79,13 +118,17 @@ export default function UomCalculatorComponent() {
   const classes = useStyles();
 
   const [fromUom, setFromUom] = useState(uoms[2]);
-  const handleFromUomChange = (event: React.ChangeEvent<any>) => setFromUom(findUom(event.target.value));
-  const [toUom, setToUom] = useState(uoms[0]);
+  const handleFromUomChange = (event: React.ChangeEvent<any>) => {
+    const nextFromUom = findUom(event.target.value);
+    setFromUom(nextFromUom);
+    if(nextFromUom.category !== toUom.category) {
+      setToUom(findUomByCategory(nextFromUom));
+    }
+  };
+  const [toUom, setToUom] = useState(findUomByCategory(fromUom));
   const handleToUomChange = (event: React.ChangeEvent<any>) => setToUom(findUom(event.target.value));
   const [from, setFrom] = useState(0);
-  const handleFromChange = (event: React.ChangeEvent<any>) => {
-    setFrom(event.target.value);
-  };
+  const handleFromChange = (event: React.ChangeEvent<any>) => setFrom(event.target.value);
   const switchUom = () => {
     const tmpFrom = fromUom;
     setFromUom(toUom);
