@@ -33,7 +33,7 @@ describe('Servings Calculator', () => {
     });
     // Then
     expect(scaledServings).toHaveProperty('servingPerPerson', servingPerPerson);
-    expect(scaledServings).toHaveProperty('ingredientsTotal', 3);
+    expect(scaledServings).toHaveProperty('ingredientsTotal', 5);
   });
   it('should return the given servings if the given scale is equal to the desired scale', () => {
     // Given
@@ -50,7 +50,7 @@ describe('Servings Calculator', () => {
     });
     // Then
     expect(scaledServings).toHaveProperty('servingPerPerson', servingPerPerson);
-    expect(scaledServings).toHaveProperty('ingredientsTotal', 3);
+    expect(scaledServings).toHaveProperty('ingredientsTotal', 5);
   });
   it('should return ingredients with the desired scale', () => {
     // Given

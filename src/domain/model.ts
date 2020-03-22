@@ -19,30 +19,10 @@ export class Ingredient {
   }
 
   private scaleUp(servings: number, desiredServings: number) {
-    console.log(
-      'Scaling up ' +
-        this.name +
-        ' ' +
-        this.quantity.amount +
-        ' by ' +
-        (desiredServings - servings) +
-        ' to ' +
-        this.quantity.amount * (desiredServings - servings)
-    );
     return this.quantity.amount * (desiredServings - servings);
   }
 
   private scaleDown(servings: number, desiredServings: number) {
-    console.log(
-      'Scaling down ' +
-        this.name +
-        ' ' +
-        this.quantity.amount +
-        ' by ' +
-        (servings - desiredServings) +
-        ' to ' +
-        this.quantity.amount * (servings - desiredServings)
-    );
     return this.quantity.amount / (servings - desiredServings);
   }
 }
