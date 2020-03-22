@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "prettier": "^1.19.1",
+    "surge": "^0.21.3",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
