@@ -18,6 +18,10 @@ export class Ingredient {
     );
   }
 
+  public displayString(): string {
+    return `${this.quantity.amount} ${this.quantity.unitOfMeasure} ${this.name}`;
+  }
+
   private scaleUp(servings: number, desiredServings: number) {
     return this.quantity.amount * (desiredServings - servings);
   }

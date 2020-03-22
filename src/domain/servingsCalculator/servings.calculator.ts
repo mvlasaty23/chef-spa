@@ -18,6 +18,7 @@ export function servingsCalculator({
   }
   // create new ingredients with scaled amount
   const scaledIngredients = ingredients.map(ingredient => ingredient.scaleTo(servingsAmount, desiredServings));
+  console.log("ingredients", scaledIngredients.map(el => el.displayString()));
   // sum up ingredients
   return {
     ingredients: scaledIngredients,
