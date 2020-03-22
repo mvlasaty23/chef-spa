@@ -7,3 +7,10 @@ cache:
 script:
   - yarn test
   - yarn build
+deploy:
+  provider: surge
+  skip_cleanup: true
+  domain: chefspa.surge.sh
+  project: ./build/
+on:
+  branch: master
