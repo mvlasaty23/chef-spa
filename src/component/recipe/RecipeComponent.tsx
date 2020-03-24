@@ -22,9 +22,9 @@ import { servingsCalculator } from '../../domain/servingsCalculator/servings.cal
 
 const initialServings: Servings = {
   ingredients: [
-    new Ingredient('Öl', { amount: 2, unitOfMeasure: 'EL' }),
-    new Ingredient('Käsekrainer', { amount: 2, unitOfMeasure: 'Stk' }),
-    new Ingredient('Brot', { amount: 2, unitOfMeasure: 'Scheiben' }),
+    new Ingredient('Öl', { amount: 2, unitOfMeasure: 'EL' }), // TODO: add flags for static / ignore from scaling
+    new Ingredient('Käsekrainer', { amount: 2, unitOfMeasure: 'Stk' }), // scale ingredients by haupt, vitamin und sättigungsteil - flag 2:1:1
+    new Ingredient('Brot', { amount: 2, unitOfMeasure: 'Scheiben' }), // decide if recipe has mutliple parts with relation
     new Ingredient('Senf', { amount: 1, unitOfMeasure: 'Portion' }),
     new Ingredient('Ketchup', { amount: 1, unitOfMeasure: 'Portion' }),
     new Ingredient('Chili', { amount: 1, unitOfMeasure: 'Stk' }),
@@ -76,7 +76,6 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeComponent() {
   const classes = useStyles();
   const [amountPerServing, setAmountPerServing] = useState(120);
-  // const [servingsPerPerson, setServingsPerPerson] = useState(4);
   const [servings, setServings] = useState(initialServings);
   const handleServingPersonChange = (desiredServings: number) =>
     setServings(servingsCalculator({ servings, desiredServings }));
@@ -105,7 +104,7 @@ export default function RecipeComponent() {
           Käsekrainer
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          Veröffentlich von Grandmaster Flash am 23.02.2020
+          Veröffentlicht von Grandmaster Flash am 23.02.2020
         </Typography>
       </Grid>
       <Grid item lg={9} md={9} sm={12} xs={12}>

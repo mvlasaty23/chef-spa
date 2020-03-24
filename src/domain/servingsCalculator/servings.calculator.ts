@@ -9,17 +9,14 @@ export function servingsCalculator({
   servings: { servingPerPerson: servingsAmount, ingredients, ingredientsTotal },
   desiredServings,
 }: ServingOptions): Servings {
-  if (desiredServings === 0 || desiredServings === servingsAmount) {
+  if (!desiredServings || desiredServings < 1 || desiredServings === servingsAmount) {
     return {
       servingPerPerson: servingsAmount,
       ingredients,
       ingredientsTotal,
     };
   }
-  // create new ingredients with scaled amount
   const scaledIngredients = ingredients.map(ingredient => ingredient.scaleTo(servingsAmount, desiredServings));
-  console.log("ingredients", scaledIngredients.map(el => el.displayString()));
-  // sum up ingredients
   return {
     ingredients: scaledIngredients,
     servingPerPerson: desiredServings,

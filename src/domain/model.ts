@@ -9,10 +9,7 @@ export class Ingredient {
       this.name,
       {
         unitOfMeasure: this.quantity.unitOfMeasure,
-        amount:
-          servings > desiredServings
-            ? this.scaleDown(servings, desiredServings)
-            : this.scaleUp(servings, desiredServings),
+        amount: (this.quantity.amount / servings) * desiredServings,
       },
       this.note
     );
@@ -20,14 +17,6 @@ export class Ingredient {
 
   public displayString(): string {
     return `${this.quantity.amount} ${this.quantity.unitOfMeasure} ${this.name}`;
-  }
-
-  private scaleUp(servings: number, desiredServings: number) {
-    return this.quantity.amount * (desiredServings - servings);
-  }
-
-  private scaleDown(servings: number, desiredServings: number) {
-    return this.quantity.amount / (servings - desiredServings);
   }
 }
 export interface Servings {
