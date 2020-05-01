@@ -1,37 +1,83 @@
+import { Button, Card, CardActions, CardContent, Grid, GridList, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { Grid, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import RecipeListItemComponent, { RecipeListItemOptions } from '../recipe/list/RecipeListItemComponent';
+
+const recipeFeed: RecipeListItemOptions[] = [
+  {
+    title: 'Käsekrainer',
+    img: 'burger.jpg',
+    author: 'Grandmaster Flash',
+    slug: '/kasekrainer',
+  },
+  {
+    title: 'Burger1',
+    img: 'burger.jpg',
+    author: 'Grandmaster Flash',
+    slug: '/kasekrainer',
+  },
+  {
+    title: 'Burger2',
+    img: 'burger.jpg',
+    author: 'Grandmaster Flash',
+    slug: '/kasekrainer',
+  },
+  {
+    title: 'Burger3',
+    img: 'burger.jpg',
+    author: 'Grandmaster Flash',
+    slug: '/kasekrainer',
+  },
+  {
+    title: 'Burger4',
+    img: 'burger.jpg',
+    author: 'Grandmaster Flash',
+    slug: '/kasekrainer',
+  },
+];
+
+const useStyles = makeStyles(theme => ({
+  recipeFeedRoot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  recipeFeedList: {
+    flexWrap: 'nowrap',
+    transform: 'translateZ(0)',
+  },
+}));
 
 export default function DashboardComponent() {
+  const classes = useStyles();
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <h1>Dashboard</h1>
+        <h1>Get Tasty!</h1>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={12}>
         <Card variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-              UoM Calculator
+              Random Gericht
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/uomcalc" size="small">Go</Button>
+            <Button component={Link} to="/uomcalc" size="small">
+              Go
+            </Button>
           </CardActions>
         </Card>
       </Grid>
-      <Grid item xs={3}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Recipes
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button component={Link} to="/recipes" size="small">Go</Button>
-          </CardActions>
-        </Card>
-      </Grid>
+      <div className={classes.recipeFeedRoot}>
+        <GridList className={classes.recipeFeedList}>
+          {recipeFeed.map(recipe => (
+            <RecipeListItemComponent key={recipe.title} {...recipe} />
+          ))}
+        </GridList>
+      </div>
       <Grid item xs={3}>
         <Card variant="outlined">
           <CardContent>
@@ -40,7 +86,9 @@ export default function DashboardComponent() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/recipes" size="small">Go</Button>
+            <Button component={Link} to="/recipes" size="small">
+              Go
+            </Button>
           </CardActions>
         </Card>
       </Grid>
@@ -52,7 +100,9 @@ export default function DashboardComponent() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/recipes" size="small">Go</Button>
+            <Button component={Link} to="/recipes" size="small">
+              Go
+            </Button>
           </CardActions>
         </Card>
       </Grid>
@@ -64,7 +114,9 @@ export default function DashboardComponent() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/recipes" size="small">Go</Button>
+            <Button component={Link} to="/recipes" size="small">
+              Go
+            </Button>
           </CardActions>
         </Card>
       </Grid>
@@ -76,7 +128,9 @@ export default function DashboardComponent() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/recipes" size="small">Go</Button>
+            <Button component={Link} to="/recipes" size="small">
+              Go
+            </Button>
           </CardActions>
         </Card>
       </Grid>

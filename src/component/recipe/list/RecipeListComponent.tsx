@@ -1,29 +1,11 @@
-import {
-  Grid,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  IconButton,
-  Breadcrumbs,
-  Link,
-  makeStyles,
-  useTheme,
-  useMediaQuery,
-} from '@material-ui/core';
-import { Info } from '@material-ui/icons';
+import { Breadcrumbs, Grid, GridList, Link, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { BehaviorSubject } from 'rxjs';
+import RecipeListItemComponent, { RecipeListItemOptions } from './RecipeListItemComponent';
 import RecipeListSearchBarComponent from './RecipeListSearchBarComponent';
 
-interface RecipeTileComponentProps {
-  img: string;
-  title: string;
-  author: string;
-  slug: string;
-}
-
-const tileData: RecipeTileComponentProps[] = [
+const tileData: RecipeListItemOptions[] = [
   {
     title: 'Käsekrainer',
     img: 'burger.jpg',
@@ -55,7 +37,7 @@ const tileData: RecipeTileComponentProps[] = [
     slug: '/kasekrainer',
   },
 ];
-const data$: BehaviorSubject<RecipeTileComponentProps[]> = new BehaviorSubject(tileData);
+const data$ = new BehaviorSubject(tileData);
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -64,11 +46,15 @@ const useStyles = makeStyles(theme => ({
   titleOverlay: {
     color: 'white',
   },
+  recipeList: {
+    justifyContent: 'center',
+    listStyleType: 'none',
+  },
 }));
 
 export default function RecipeListComponent() {
   const classes = useStyles();
-  const [recipes, setRecipes] = useState<RecipeTileComponentProps[]>([]);
+  const [recipes, setRecipes] = useState<RecipeListItemOptions[]>([]);
   useEffect(() => {
     const sub = data$.subscribe(data => setRecipes(data), console.error);
     return () => {
@@ -97,20 +83,9 @@ export default function RecipeListComponent() {
       <Grid item xs={12}>
         <RecipeListSearchBarComponent />
       </Grid>
-      <GridList cellHeight={180} cols={cols}>
+      <GridList cols={cols} className={classes.recipeList}>
         {recipes.map(tile => (
-          <GridListTile key={tile.title}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
-              actionIcon={
-                <IconButton component={RouterLink} to={'/recipes' + tile.slug} aria-label={`info about ${tile.title}`}>
-                  <Info className={classes.titleOverlay} />
-                </IconButton>
-              }
-            />
-          </GridListTile>
+          <RecipeListItemComponent key={tile.title} {...tile} />
         ))}
       </GridList>
     </div>
