@@ -1,18 +1,18 @@
 import { createMuiTheme } from '@material-ui/core';
 
-// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=90CAF9&secondary.color=607D8B&secondary.text.color=ffffff
+// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=9FA8DA&secondary.color=78909C
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#c3fdff',
-      main: '#90caf9',
-      dark: '#5d99c6',
+      light: '#d1d9ff',
+      main: '#9fa8da',
+      dark: '#6f79a8',
       contrastText: '#000',
     },
     secondary: {
-      light: '#8eacbb',
-      main: '#607d8b',
-      dark: '#34515e',
+      light: '#a7c0cd',
+      main: '#78909c',
+      dark: '#4b636e',
       contrastText: '#fff',
     },
   },
