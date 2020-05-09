@@ -10,9 +10,9 @@ export interface RecipeListItemOptions {
   slug: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   titleOverlay: {
-    color: theme.palette.primary.light,
+    color: 'white',
   },
   titleImage: {
     height: '180px',

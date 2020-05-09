@@ -55,7 +55,9 @@ export default function DashboardComponent() {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <h1>Get Tasty!</h1>
+        <Typography variant="h4" component="h4">
+          Rezept des Tages
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Card variant="outlined">
@@ -71,6 +73,11 @@ export default function DashboardComponent() {
           </CardActions>
         </Card>
       </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h4" component="h4">
+          Neue Rezepte
+        </Typography>
+      </Grid>
       <div className={classes.recipeFeedRoot}>
         <GridList className={classes.recipeFeedList}>
           {recipeFeed.map(recipe => (
@@ -78,6 +85,7 @@ export default function DashboardComponent() {
           ))}
         </GridList>
       </div>
+      {/* TODO: add a line with a link to recipe list*/}
       <Grid item xs={3}>
         <Card variant="outlined">
           <CardContent>

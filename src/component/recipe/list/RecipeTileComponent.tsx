@@ -8,7 +8,6 @@ export interface RecipeTileComponentProps {
   author: string;
 }
 export default function RecipeTileComponent({ img, title, author }: RecipeTileComponentProps) {
-  console.log('Rendering ', title);
   return (
     <GridListTile key={img}>
       <img src={img} alt={title} />
