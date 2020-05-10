@@ -43,10 +43,12 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
+    padding: '7px',
   },
   recipeFeedList: {
     flexWrap: 'nowrap',
     transform: 'translateZ(0)',
+    borderRadius: theme.shape.borderRadius,
   },
 }));
 
@@ -86,11 +88,16 @@ export default function DashboardComponent() {
         </GridList>
       </div>
       {/* TODO: add a line with a link to recipe list*/}
-      <Grid item xs={3}>
+      <Grid item xs={12}>
+        <Typography variant="h4" component="h4">
+          Küchenhilfe
+        </Typography>
+      </Grid>
+      <Grid item xs={6}>
         <Card variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-              Ingredients
+              Planungs Assistent
             </Typography>
           </CardContent>
           <CardActions>
@@ -100,39 +107,11 @@ export default function DashboardComponent() {
           </CardActions>
         </Card>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={6}>
         <Card variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-              Tools
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button component={Link} to="/recipes" size="small">
-              Go
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
-      <Grid item xs={3}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Shopping List
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button component={Link} to="/recipes" size="small">
-              Go
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
-      <Grid item xs={3}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Grow Guide
+              Anbau Assistent
             </Typography>
           </CardContent>
           <CardActions>
