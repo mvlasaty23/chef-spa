@@ -1,4 +1,15 @@
-import { Button, Card, CardActions, CardContent, Grid, GridList, makeStyles, Typography } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  GridList,
+  makeStyles,
+  Typography,
+  CardActionArea,
+  CardMedia,
+} from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import RecipeListItemComponent, { RecipeListItemOptions } from '../recipe/list/RecipeListItemComponent';
@@ -50,29 +61,36 @@ const useStyles = makeStyles(theme => ({
     transform: 'translateZ(0)',
     borderRadius: theme.shape.borderRadius,
   },
+  recipeCard: {
+    marginTop: theme.spacing(),
+  },
+  recipeCardImage: {
+    height: 140,
+  },
 }));
 
 export default function DashboardComponent() {
   const classes = useStyles();
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography variant="h4" component="h4">
           Rezept des Tages
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Random Gericht
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button component={Link} to="/uomcalc" size="small">
-              Go
-            </Button>
-          </CardActions>
+        <Card className={classes.recipeCard}>
+          <CardActionArea component={Link} to={'/recipes' + '/kasekrainer'}>
+            <CardMedia className={classes.recipeCardImage} image="/burger.jpg" title="Burger" />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Gericht des Tages
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Hier kommt ein kurztext her um das Gericht des Tages an zu teasern...
+              </Typography>
+            </CardContent>
+          </CardActionArea>
         </Card>
       </Grid>
       <Grid item xs={12}>

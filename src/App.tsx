@@ -24,7 +24,7 @@ export default function App() {
           <AppBar position="fixed">
             <Toolbar className={classes.spacedToolbar}>
               <Typography variant="h6" className="title">
-                Food
+                Kitchen Supreme
               </Typography>
               <IconButton onClick={toggleMenu(!menuOpen)} edge="end" color="inherit" aria-label="menu">
                 <Menu />
