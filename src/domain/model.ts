@@ -9,7 +9,7 @@ export class Ingredient {
       this.name,
       {
         unitOfMeasure: this.quantity.unitOfMeasure,
-        amount: servings === 0 ? 1 : (this.quantity.amount / servings) * desiredServings,
+        amount: (this.quantity.amount / servings) * desiredServings,
       },
       this.note
     );
