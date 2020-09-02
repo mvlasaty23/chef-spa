@@ -9,7 +9,7 @@ export function servingsCalculator({
   servings: { servingPerPerson: servingsAmount, ingredients, ingredientsTotal },
   desiredServings,
 }: ServingOptions): Servings {
-  if (!desiredServings || desiredServings < 1 || desiredServings === servingsAmount) {
+  if (desiredServings < 0 || desiredServings === servingsAmount) {
     return {
       servingPerPerson: servingsAmount,
       ingredients,
