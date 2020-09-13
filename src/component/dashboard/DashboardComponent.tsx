@@ -80,7 +80,7 @@ export default function DashboardComponent() {
       </Grid> */}
       <Grid item xs={12}>
         <Card className={classes.recipeCard}>
-          <CardActionArea component={Link} to={'/recipes' + '/kasekrainer'}>
+          <CardActionArea component={Link} to={'/recipes/kasekrainer'}>
             <CardMedia className={classes.recipeCardImage} image="/burger.jpg" title="Burger" />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
