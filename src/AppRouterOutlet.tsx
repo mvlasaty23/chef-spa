@@ -4,6 +4,7 @@ import DashboardComponent from './component/dashboard/DashboardComponent';
 import RecipeListComponent from './component/recipe/list/RecipeListComponent';
 import RecipeComponent from './component/recipe/RecipeComponent';
 import UomCalculatorComponent from './component/uomcalculator/UomCalculatorComponent';
+import RecipeCreateComponent from './component/recipe/create/RecipeCreateComponent';
 
 export default function AppRouterOutlet() {
   return (
@@ -16,6 +17,9 @@ export default function AppRouterOutlet() {
       </Route>
       <Route exact={true} path="/recipes">
         <RecipeListComponent />
+      </Route>
+      <Route exact={true} path="/recipes/create">
+        <RecipeCreateComponent />
       </Route>
       <Route exact={true} path="/recipes/kasekrainer">
         <RecipeComponent />
