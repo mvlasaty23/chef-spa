@@ -115,11 +115,11 @@ export default function DashboardComponent() {
         <Card variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-              Planungs Assistent
+              Rezept erstellen
             </Typography>
           </CardContent>
           <CardActions>
-            <Button component={Link} to="/recipes" size="small">
+            <Button component={Link} to="/recipes/create" size="small">
               Go
             </Button>
           </CardActions>

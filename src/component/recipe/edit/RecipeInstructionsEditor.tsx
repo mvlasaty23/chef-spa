@@ -8,6 +8,10 @@ enum TYPE {
   listItem = 'listItem',
   paragraph = 'paragraph',
   link = 'link',
+  quote = 'quote',
+  heading1 = 'heading1',
+  heading2 = 'heading2',
+  heading3 = 'heading3'
 }
 export function RecipeInstunctrionsEditor() {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -26,12 +30,20 @@ export function RecipeInstunctrionsEditor() {
       children: [{ text: 'A hyperlink' }],
     },
     {
-      type: TYPE.paragraph,
-      children: [
-        {
-          text: 'Just a paragraph2',
-        },
-      ],
+      type: TYPE.quote,
+      children: [{ text: 'This is a quote' }],
+    },
+    {
+      type: TYPE.heading1,
+      children: [{ text: 'Heading 1' }],
+    },
+    {
+      type: TYPE.heading2,
+      children: [{ text: 'Heading 2' }],
+    },
+    {
+      type: TYPE.heading3,
+      children: [{ text: 'Heading 3' }],
     },
     {
       type: TYPE.unorderedList,
@@ -62,42 +74,18 @@ export function RecipeInstunctrionsEditor() {
   ] as Node[]);
   const renderElement = useCallback((props: RenderElementProps) => {
     let renderer = elements[props.element.type as keyof typeof TYPE];
-    if (!renderer) {
+    if (!renderer) { // Defaulting to a paragraph
       renderer = elements.paragraph;
     }
     return renderer(props);
   }, []);
   const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...props} />, []);
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.altKey && event.key === 'Enter') {
-      // double enter should split
-      event.preventDefault();
-      insertParagraph(editor);
-      return;
-    }
-    if (!event.ctrlKey) {
-      return;
-    }
-    // TODO: implement getLeaf for toggles
-    switch (event.key) {
-      case 'b':
-        event.preventDefault();
-        toggleBold(editor);
-        break;
-      case 'i':
-        event.preventDefault();
-        toggleItalic(editor);
-        break;
-      case 'k':
-        event.preventDefault();
-        toggleStrikeThrough(editor);
-        break;
-      case 'u':
-        event.preventDefault();
-        toggleUnderline(editor);
-        break;
-    }
+    if (event.altKey) {
+      handleAltKey(editor, event);
+    } else if (event.ctrlKey) {
+      handleCtrlKey(editor, event);
+    }    
   };
   return (
     <Slate editor={editor} value={instructions} onChange={newInstructions => setInstructions(newInstructions)}>
@@ -106,19 +94,32 @@ export function RecipeInstunctrionsEditor() {
   );
 }
 
-// Commands
-function getNode(editor: Editor, path: Path) {
-  return Node.get(editor, path);
-}
-function toggleListElement(arr: string[], str: string) {
-  if(!arr || !Array.isArray(arr)) {
-    return [str];
-  } else if(arr.findIndex(el => el === str) > -1){
-    return arr.filter(el => el !== str);
-  } else {
-    return arr.concat(str);
+// Handler
+type KeyCommandMap = {[k: string]: (e: Editor & ReactEditor) => void};
+function handleAltKey(editor: Editor & ReactEditor, event: React.KeyboardEvent<HTMLDivElement>) {
+  const keyMap: KeyCommandMap = {
+    Enter: insertParagraph
+  };
+  const command = keyMap[event.key];
+  if(command) {
+    event.preventDefault();
+    command(editor);
   }
 }
+function handleCtrlKey(editor: Editor & ReactEditor, event: React.KeyboardEvent<HTMLDivElement>) {
+  const keyMap: KeyCommandMap = {
+    b: toggleBold,
+    i: toggleItalic,
+    k: toggleStrikeThrough,
+    u: toggleUnderline
+  };
+  const command = keyMap[event.key];
+  if (command) {
+    event.preventDefault();
+    command(editor);
+  }
+}
+// Commands
 function toggleBold(editor: Editor & ReactEditor) {
   const node = getNode(editor, editor.selection!.anchor.path)
   Transforms.setNodes(editor, { bold: node.bold ? false : true }, { match: n => Text.isText(n), split: true });
@@ -137,9 +138,6 @@ function toggleUnderline(editor: Editor & ReactEditor) {
   const node = getNode(editor, editor.selection!.anchor.path)
   setTextDecoration(editor, toggleListElement(node.textDecoration as string[], UNDER_LINE));
 }
-function setTextDecoration(editor: Editor, textDecoration: string[]){
-  Transforms.setNodes(editor, { textDecoration }, { match: n => Text.isText(n), split: true });
-}
 function insertParagraph(editor: Editor & ReactEditor) {
   Transforms.insertNodes(
     editor,
@@ -147,6 +145,22 @@ function insertParagraph(editor: Editor & ReactEditor) {
     { at: [editor.selection!.anchor.path[0] + 1] }
   );
   Transforms.select(editor, [editor.selection!.anchor.path[0] + 1]);
+}
+
+function getNode(editor: Editor, path: Path) {
+  return Node.get(editor, path);
+}
+function toggleListElement(arr: string[], str: string) {
+  if(!arr || !Array.isArray(arr)) {
+    return [str];
+  } else if(arr.findIndex(el => el === str) > -1){
+    return arr.filter(el => el !== str);
+  } else {
+    return arr.concat(str);
+  }
+}
+function setTextDecoration(editor: Editor, textDecoration: string[]){
+  Transforms.setNodes(editor, { textDecoration }, { match: n => Text.isText(n), split: true });
 }
 // RENDERER
 const elements: { [K in keyof typeof TYPE]: (props: RenderElementProps) => JSX.Element } = {
@@ -159,6 +173,10 @@ const elements: { [K in keyof typeof TYPE]: (props: RenderElementProps) => JSX.E
       {props.children}
     </a>
   ),
+  quote: (props: RenderElementProps) => <q {...props.attributes}>{props.children}</q>,
+  heading1: (props: RenderElementProps) => <h1 {...props.attributes}>{props.children}</h1>,
+  heading2: (props: RenderElementProps) => <h2 {...props.attributes}>{props.children}</h2>,
+  heading3: (props: RenderElementProps) => <h3 {...props.attributes}>{props.children}</h3>,
 };
 
 const Leaf = (props: RenderLeafProps) => {
