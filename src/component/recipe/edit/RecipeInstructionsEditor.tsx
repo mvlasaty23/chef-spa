@@ -91,7 +91,7 @@ export function RecipeInstunctrionsEditor() {
       setStyleButtonVisible(false);
     }
   };
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = () => {
     setStyleButtonVisible(false);
   };
   const [styleButtonVisible, setStyleButtonVisible] = useState(false);
