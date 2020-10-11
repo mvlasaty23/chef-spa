@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { IconButton } from '@material-ui/core';
+import { AddCircle } from '@material-ui/icons';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createEditor, Editor, Node, Path, Text, Transforms } from 'slate';
 import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
 
@@ -85,12 +87,39 @@ export function RecipeInstunctrionsEditor() {
       handleAltKey(editor, event);
     } else if (event.ctrlKey) {
       handleCtrlKey(editor, event);
-    }    
+    } else if(event.key === 'Escape') {
+      setStyleButtonVisible(false);
+    }
   };
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setStyleButtonVisible(false);
+  };
+  const [styleButtonVisible, setStyleButtonVisible] = useState(false);
+  const [styleButtonCoordinates, setStyleButtonCoordinates] = useState({x:0,y:0});
+  useEffect(() => {
+    const contextMenutListener = (event: MouseEvent) => {
+      event.preventDefault();
+      setStyleButtonCoordinates({x: event.pageX, y: event.pageY});
+      setStyleButtonVisible(true);
+    }; 
+    document.addEventListener("contextmenu", contextMenutListener);
+    return () => document.removeEventListener("contextmenu", contextMenutListener);
+  });
   return (
     <Slate editor={editor} value={instructions} onChange={newInstructions => setInstructions(newInstructions)}>
-      <Editable renderLeaf={renderLeaf} renderElement={renderElement} onKeyDown={handleKeyDown} />
+      <ElementStyleButton visible={styleButtonVisible} x={styleButtonCoordinates.x} y={styleButtonCoordinates.y} />
+      <Editable onClick={handleClick} renderLeaf={renderLeaf} renderElement={renderElement} onKeyDown={handleKeyDown} />
     </Slate>
+  );
+}
+
+function ElementStyleButton(options: {visible: boolean, x: number, y: number}) {
+  return(
+    <div style={{visibility: options.visible ? 'visible' : 'hidden', position: 'fixed', left: options.x, top: options.y/*, marginLeft: '-24px', marginTop: '-24px'*/}}>
+      <IconButton aria-label="add">
+        <AddCircle />
+      </IconButton>
+    </div>
   );
 }
 
@@ -162,7 +191,7 @@ function toggleListElement(arr: string[], str: string) {
 function setTextDecoration(editor: Editor, textDecoration: string[]){
   Transforms.setNodes(editor, { textDecoration }, { match: n => Text.isText(n), split: true });
 }
-// RENDERER
+// Renderer
 const elements: { [K in keyof typeof TYPE]: (props: RenderElementProps) => JSX.Element } = {
   paragraph: (props: RenderElementProps) => <p {...props.attributes}>{props.children}</p>,
   orderedList: (props: RenderElementProps) => <ol {...props.attributes}>{props.children}</ol>,
